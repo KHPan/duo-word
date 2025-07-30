@@ -1,0 +1,110 @@
+/* 全局樣式，用於垂直和水平置中 */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+#main-container {
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* 初始設定畫面 */
+#setup-screen h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+#topic-combo {
+    padding: 10px;
+    font-size: 1.2em;
+    width: 60%;
+    max-width: 400px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* 測驗畫面 */
+#question-label {
+    font-size: 3.5em;
+    margin-bottom: 40px;
+    font-weight: bold;
+    color: black;
+    /* 用於顏色變化的平滑過渡 */
+    transition: color 0.1s ease-in-out;
+}
+
+#answers-container {
+    display: flex;
+    justify-content: space-between; /* 讓按鈕平均分佈寬度 */
+    gap: 15px; /* 按鈕之間的間距 */
+}
+
+.answer-btn {
+    flex: 1; /* 讓所有按鈕佔用相同的空間 */
+    padding: 20px 10px;
+    font-size: 1.8em;
+    border: 3px solid #a6e22e; /* 示意圖中的亮綠色邊框 */
+    background-color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    text-align: center;
+    /* 允許文字自動換行 */
+    word-wrap: break-word;
+    white-space: normal;
+    min-height: 90px; /* 確保按鈕有最小高度 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+.answer-btn:hover {
+    background-color: #f8f8f8;
+}
+
+.answer-btn:active {
+    transform: scale(0.97);
+}
+
+#key-hints {
+    margin-top: 20px;
+    color: #888;
+    font-size: 1em;
+}
+
+/* 用於答錯時的紅色文字效果 */
+/* .incorrect {
+    color: red;
+} */
+@keyframes flash-red {
+  0% {
+    color: black;
+    transform: scale(1);
+  }
+  50% {
+    color: red;
+    transform: scale(1.05); /* 稍微放大，增加視覺衝擊 */
+  }
+  100% {
+    color: black;
+    transform: scale(1);
+  }
+}
+
+/* 一個專門用來觸發動畫的 class */
+.animate-flash {
+  /* 將動畫應用到這個 class 上 */
+  animation: flash-red 0.4s ease-in-out;
+}
+
+/* 用於隱藏/顯示畫面的工具類 */
+.hidden {
+    display: none !important;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>看英文選中文</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-container">
+        <!-- 初始設定畫面 -->
+        <div id="setup-screen">
+            <h1>請選擇題庫</h1>
+            <select id="topic-combo">
+                <option value="">-- 請選擇 --</option>
+            </select>
+        </div>
+
+        <!-- 測驗畫面 (初始隱藏) -->
+        <div id="quiz-screen" class="hidden">
+            <p id="question-label"></p>
+            <div id="answers-container">
+                <button class="answer-btn"></button>
+                <button class="answer-btn"></button>
+                <button class="answer-btn"></button>
+                <button class="answer-btn"></button>
+            </div>
+            <p id="key-hints">按鍵: D, F, J, K</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

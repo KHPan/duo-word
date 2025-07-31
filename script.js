@@ -4,6 +4,8 @@ const quizScreen = document.getElementById('quiz-screen');
 const combo = document.getElementById('topic-combo');
 const questionLabel = document.getElementById('question-label');
 const anss = document.querySelectorAll('.answer-btn');
+const correctCountSpan = document.getElementById('correct-count');
+const totalCountSpan = document.getElementById('total-count');
 
 // --- 全局變數 ---
 const keys = "dfjk"; // 對應按鈕的鍵盤按鍵 (小寫)
@@ -11,6 +13,7 @@ let fileMap = {};    // 儲存 file-map.json 的內容
 let data = [];       // 儲存當前題庫的所有題目
 let ques = [];       // 儲存畫面上四個選項對應的 "問題" (英文)
 let untilIndex = 0;  // 追蹤題庫使用到第幾題
+let correctCount = 0; // 追蹤答對題數
 let isAnimating = false; // 用來防止動畫重複觸發的旗標
 
 // --- 主要功能函式 ---
@@ -56,6 +59,9 @@ async function afterSelectCombo() {
         quizScreen.classList.remove('hidden');
         ques = [];
         untilIndex = 0;
+        correctCount = 0;
+
+        updateScoreDisplay();
 
         for (let i = 0; i < 4; i++) {
             const [q, a] = getNextDataItem();
@@ -90,6 +96,8 @@ function handleAnswer(index) {
 
     if (questionLabel.textContent === ques[index]) {
         // --- 回答正確 ---
+        correctCount++;
+        updateScoreDisplay();
         const [nextQ, nextA] = getNextDataItem();
         anss[index].textContent = nextA;
         ques[index] = nextQ;
@@ -128,8 +136,10 @@ function shuffle(array) {
 function getNextDataItem() {
     if (untilIndex >= data.length) {
         untilIndex = 0;
-        alert("恭喜完成一輪！");
+        correctCount = 0;
+        alert("恭喜完成一輪！將重新開始。");
         data = shuffle(data);
+        updateScoreDisplay();
     }
     const item = data[untilIndex];
     untilIndex++;
@@ -143,6 +153,11 @@ function pickNewQuestion(excludeQuestion = null) {
     }
     const newQuestion = possibleQuestions[Math.floor(Math.random() * possibleQuestions.length)];
     questionLabel.textContent = newQuestion;
+}
+
+function updateScoreDisplay() {
+    correctCountSpan.textContent = correctCount;
+    totalCountSpan.textContent = data.length;
 }
 
 function handleKeyPress(event) {

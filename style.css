@@ -31,6 +31,21 @@ body {
 }
 
 /* 測驗畫面 */
+#score-container {
+    font-size: 1.5em;
+    color: #555;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+#correct-count {
+    color: green;
+}
+
+#total-count {
+    color: blue;
+}
+
 #question-label {
     font-size: 3.5em;
     margin-bottom: 40px;

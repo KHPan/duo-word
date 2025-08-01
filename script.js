@@ -6,6 +6,8 @@ const questionLabel = document.getElementById('question-label');
 const anss = document.querySelectorAll('.answer-btn');
 const correctCountSpan = document.getElementById('correct-count');
 const totalCountSpan = document.getElementById('total-count');
+const layoutToggleBtn = document.getElementById('layout-toggle-btn');
+const answersContainer = document.getElementById('answers-container');
 
 // --- 全局變數 ---
 const keys = "dfjk"; // 對應按鈕的鍵盤按鍵 (小寫)
@@ -15,6 +17,21 @@ let ques = [];       // 儲存畫面上四個選項對應的 "問題" (英文)
 let untilIndex = 0;  // 追蹤題庫使用到第幾題
 let correctCount = 0; // 追蹤答對題數
 let isAnimating = false; // 用來防止動畫重複觸發的旗標
+const layouts = [ // 定義三種佈局的圖示
+    { 
+        name: 'horizontal', 
+        icon: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect y="0" width="100" height="25" rx="5"/><rect y="37.5" width="100" height="25" rx="5"/><rect y="75" width="100" height="25" rx="5"/></svg>` 
+    }, // 當前是橫排，按鈕顯示「直排」圖示
+    { 
+        name: 'vertical', 
+        icon: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="45" height="45" rx="5"/><rect x="55" y="0" width="45" height="45" rx="5"/><rect x="0" y="55" width="45" height="45" rx="5"/><rect x="55" y="55" width="45" height="45" rx="5"/></svg>` 
+    }, // 當前是直排，按鈕顯示「方格」圖示
+    { 
+        name: 'grid', 
+        icon: `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="0" height="100" width="25" rx="5"/><rect x="37.5" height="100" width="25" rx="5"/><rect x="75" height="100" width="25" rx="5"/></svg>` 
+    }  // 當前是方格，按鈕顯示「橫排」圖示 (這裡我畫了4條，你也可以只畫2條)
+];
+let currentLayoutIndex = 0; // 0: horizontal, 1: vertical, 2: grid
 
 // --- 主要功能函式 ---
 
@@ -35,6 +52,10 @@ async function start() {
         console.error("無法載入 file-map.json:", error);
         alert("無法載入題庫設定檔 (file-map.json)，請檢查檔案是否存在。");
     }
+    // 為佈局切換按鈕綁定事件
+    layoutToggleBtn.addEventListener('click', toggleLayout);
+    // 初始化按鈕圖示
+    layoutToggleBtn.innerHTML = layouts[currentLayoutIndex].icon;
 }
 
 async function afterSelectCombo() {
@@ -168,6 +189,25 @@ function handleKeyPress(event) {
         event.preventDefault(); 
         handleAnswer(index);
     }
+}
+
+function toggleLayout() {
+    // 移除舊的佈局 class
+    answersContainer.classList.remove('layout-vertical', 'layout-grid');
+
+    // 計算下一個佈局的索引
+    currentLayoutIndex = (currentLayoutIndex + 1) % layouts.length;
+    
+    // 獲取新的佈局名稱
+    const newLayout = layouts[currentLayoutIndex];
+
+    // 如果新的佈局不是預設的橫排，就加上對應的 class
+    if (newLayout.name !== 'horizontal') {
+        answersContainer.classList.add(`layout-${newLayout.name}`);
+    }
+
+    // 更新按鈕上的圖示，顯示下一次點擊會變成的樣子
+    layoutToggleBtn.innerHTML = newLayout.icon;
 }
 
 // --- 程式初始化 ---

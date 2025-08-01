@@ -55,12 +55,6 @@ body {
     transition: color 0.1s ease-in-out;
 }
 
-#answers-container {
-    display: flex;
-    justify-content: space-between; /* 讓按鈕平均分佈寬度 */
-    gap: 15px; /* 按鈕之間的間距 */
-}
-
 .answer-btn {
     flex: 1; /* 讓所有按鈕佔用相同的空間 */
     padding: 20px 10px;
@@ -122,4 +116,63 @@ body {
 /* 用於隱藏/顯示畫面的工具類 */
 .hidden {
     display: none !important;
+}
+
+/* --- 請在檔案最下方加入這些新的 CSS 規則 --- */
+
+/* 1. 切換按鈕本身的樣式 */
+#layout-toggle-btn {
+    position: fixed; /* 固定在視窗的固定位置 */
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 1000; /* 確保在最上層 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px; /* 讓圖示有內邊距 */
+    transition: background-color 0.2s;
+}
+
+#layout-toggle-btn:hover {
+    background-color: #e0e0e0;
+}
+
+#layout-toggle-btn svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* 2. 三種佈局模式的 class */
+
+/* 橫排模式 (預設，不需額外 class) */
+#answers-container {
+    /* ... 您原有的樣式保持不變 ... */
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+/* 直排模式 */
+#answers-container.layout-vertical {
+    flex-direction: column; /* 將主軸改為垂直 */
+    align-items: center;    /* 在交叉軸上置中 */
+    max-width: 400px;       /* 限制最大寬度避免按鈕太長 */
+    margin: 0 auto;         /* 讓容器本身水平置中 */
+}
+
+.layout-vertical .answer-btn {
+    width: 100%; /* 在直排模式下讓按鈕寬度撐滿 */
+}
+
+/* 方格模式 */
+#answers-container.layout-grid {
+    display: grid; /* 使用 Grid 佈局 */
+    grid-template-columns: 1fr 1fr; /* 兩欄，每欄佔據相同空間 */
+    gap: 15px;
 }

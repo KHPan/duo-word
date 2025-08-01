@@ -176,3 +176,21 @@ body {
     grid-template-columns: 1fr 1fr; /* 兩欄，每欄佔據相同空間 */
     gap: 15px;
 }
+
+/* GitHub 連結樣式 */
+#github-link {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+    opacity: 0.6;
+    transition: opacity 0.2s ease-in-out;
+}
+
+#github-link:hover {
+    opacity: 1;
+}
+
+#github-link svg {
+    fill: #333; /* 圖示顏色 */
+}
